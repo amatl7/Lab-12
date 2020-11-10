@@ -13,25 +13,28 @@ from numpy import random
 #Testing github
 #Hello
 pokedex = open('PokeList_v2.csv','r')
-def main_menu():
+def main_menu(filename):
     '''This function displayes a main menu and runs the selected menu option'''
     print('{} MAIN MENU {}\n\n1. View Pokemon\n2. Battle Pokemon\n3. View Items\n4. Catch New Pokemon\n'.format(dashes, dashes))
     selection = int(input())
     if selection == 1:
-        view_pokemon()
+        view_pokemon(filename)
     elif selection == 2:
-        battle_pokemon()
+        battle_pokemon(filename)
     elif selection == 3:
-        view_items()
+        view_items(filename)
     elif selection == 4:
-        catch_pokemon()
-def view_pokemon():
+        catch_pokemon(filename)
+def view_pokemon(filename):
     '''Displays a list of pokemon'''
-def battle_pokemon():
+    pokemons = open(filename, 'r')
+    for i in pokemons:
+        print(pokemons)
+def battle_pokemon(filename):
     '''Allows another player to be selected then initiates battle'''
-def view_items():
+def view_items(filename):
     '''Displays the items in inventory'''
-def catch_pokemon():
+def catch_pokemon(filename):
     '''Runs a minigame where user may catch the random pokemon'''
 def player_select():
     '''This function displays a list of players and allows the user to select the player then runs main menu'''
@@ -49,9 +52,15 @@ def select_player():
         for line in playerdatabase:
             print('{}. {}'.format(counter, line), end='')
             counter += 1
-    selected_player = int(input())
-
-    main_menu()
+        counter = 1
+        selected_player = int(input())
+    with open('playerdatabase.txt', 'r') as playerdatabase:
+        for line in playerdatabase:
+            if selected_player == counter:
+                filename = line[0:6]
+            counter += 1
+    print(filename)
+    main_menu(filename)
 def create_new_player():
     '''This function creates a new player and adds it to file then creates a new player file then goes to main menu'''
     username = input('Enter your player username: ')
@@ -71,7 +80,7 @@ def create_new_player():
             with open(filename, 'w') as playerfile:
                 playerfile.write(username + '\n')
                 playerfile.write(i[0] + ',' + i[1] + ',' + '1' + ',' + i[2] + ',' + i[3])
-    main_menu()
+    main_menu(filename)
 
 
 player_select()
