@@ -7,8 +7,8 @@
 # Assignment:   THE ASSIGNMENT NUMBER Lab 2B Program 1
 # Date:         1 September 2020
 dashes = '-' * 30
-
 import csv
+import pathlib
 from numpy import random
 #Testing github
 #Hello
@@ -43,6 +43,14 @@ def player_select():
         select_player()
 def select_player():
     '''This function displays a list from the player file and allows user to select a player, returns that player then goes to main menu'''
+    print('Select your player')
+    counter = 1
+    with open('playerdatabase.txt', 'r') as playerdatabase:
+        for line in playerdatabase:
+            print('{}. {}'.format(counter, line), end='')
+            counter += 1
+    selected_player = int(input())
+
     main_menu()
 def create_new_player():
     '''This function creates a new player and adds it to file then creates a new player file then goes to main menu'''
@@ -50,15 +58,19 @@ def create_new_player():
     filename = username + '.csv'
     starter = random.randint(1,151)
     pokeman = csv.reader(pokedex, delimiter=',')
+    playerbase = pathlib.Path('playerdatabase.txt')
+    if playerbase.exists():
+        with open('playerdatabase.txt', 'a') as  playerdatabase:
+            playerdatabase.write(username + '\n')
+    else:
+        with open('playerdatabase.txt', 'w') as playerdatabase:
+            playerdatabase.write(username + '\n')
     for i in pokeman:
         if i[0] == str(starter):
-            print('Congratulation {}!!!\nYou have received your first pokemon!!!\nAnd that pokemon is.....\nA {}!!!!!!'.format(username, i[1]))
+            print('\n\nCongratulation {}!!!\nYou have received your first pokemon!!!\nAnd that pokemon is.....\nA {}!!!!!!'.format(username, i[1]))
             with open(filename, 'w') as playerfile:
                 playerfile.write(username + '\n')
-                playerfile.write(i[0] + ',' + i[1] + ',' + i[2] + ',' + i[3])
-            with open('playerdatabase', 'w') as playerdatabase:
-                playerdatabase.write(username + '\n')
-                playerdatabase.write(username + '\n')
+                playerfile.write(i[0] + ',' + i[1] + ',' + '1' + ',' + i[2] + ',' + i[3])
     main_menu()
 
 
