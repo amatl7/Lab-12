@@ -7,9 +7,11 @@
 # Assignment:   THE ASSIGNMENT NUMBER Lab 2B Program 1
 # Date:         1 September 2020
 dashes = '-' * 30
+
 import csv
 from numpy import random
-
+#Testing github
+#Hello
 pokedex = open('PokeList_v2.csv','r')
 def main_menu():
     '''This function displayes a main menu and runs the selected menu option'''
